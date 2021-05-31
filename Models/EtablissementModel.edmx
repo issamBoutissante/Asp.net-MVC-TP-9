@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EtablissementModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="EtablissementModelStoreContainer">
+    <EntitySet Name="Eleves" EntityType="EtablissementModel.Store.Eleves" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Notes" EntityType="EtablissementModel.Store.Notes" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="EleveNote" Association="EtablissementModel.Store.EleveNote">
+      <End Role="Eleve" EntitySet="Eleves" />
+      <End Role="Note" EntitySet="Notes" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Eleves">
+    <Key>
+      <PropertyRef Name="Id_Eleve" />
+    </Key>
+    <Property Name="Id_Eleve" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Notes">
+    <Key>
+      <PropertyRef Name="Id_Mat" />
+    </Key>
+    <Property Name="Id_Mat" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Note1" Type="decimal" Nullable="false" />
+    <Property Name="Note2" Type="decimal" Nullable="false" />
+    <Property Name="Id_Eleve" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="EleveNote">
+    <End Role="Eleve" Type="EtablissementModel.Store.Eleves" Multiplicity="1" />
+    <End Role="Note" Type="EtablissementModel.Store.Notes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Eleve">
+        <PropertyRef Name="Id_Eleve" />
+      </Principal>
+      <Dependent Role="Note">
+        <PropertyRef Name="Id_Eleve" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="EtablissementModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="EtablissementModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Eleves" EntityType="EtablissementModel.Eleve" />
+          <EntitySet Name="Notes" EntityType="EtablissementModel.Note" />
+          <AssociationSet Name="EleveNote" Association="EtablissementModel.EleveNote">
+            <End Role="Eleve" EntitySet="Eleves" />
+            <End Role="Note" EntitySet="Notes" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Eleve">
+          <Key>
+            <PropertyRef Name="Id_Eleve" />
+          </Key>
+          <Property Name="Id_Eleve" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" Nullable="false" />
+          <NavigationProperty Name="Notes" Relationship="EtablissementModel.EleveNote" FromRole="Eleve" ToRole="Note" />
+        </EntityType>
+        <EntityType Name="Note">
+          <Key>
+            <PropertyRef Name="Id_Mat" />
+          </Key>
+          <Property Name="Id_Mat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Note1" Type="Decimal" Nullable="false" />
+          <Property Name="Note2" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="Eleve" Relationship="EtablissementModel.EleveNote" FromRole="Note" ToRole="Eleve" />
+          <Property Name="Id_Eleve" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="EleveNote">
+          <End Type="EtablissementModel.Eleve" Role="Eleve" Multiplicity="1" />
+          <End Type="EtablissementModel.Note" Role="Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Eleve">
+              <PropertyRef Name="Id_Eleve" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="Id_Eleve" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EtablissementModelStoreContainer" CdmEntityContainer="EtablissementModelContainer">
+    <EntitySetMapping Name="Eleves">
+      <EntityTypeMapping TypeName="IsTypeOf(EtablissementModel.Eleve)">
+        <MappingFragment StoreEntitySet="Eleves">
+          <ScalarProperty Name="Id_Eleve" ColumnName="Id_Eleve" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Notes">
+      <EntityTypeMapping TypeName="IsTypeOf(EtablissementModel.Note)">
+        <MappingFragment StoreEntitySet="Notes">
+          <ScalarProperty Name="Id_Mat" ColumnName="Id_Mat" />
+          <ScalarProperty Name="Note1" ColumnName="Note1" />
+          <ScalarProperty Name="Note2" ColumnName="Note2" />
+          <ScalarProperty Name="Id_Eleve" ColumnName="Id_Eleve" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
